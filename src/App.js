@@ -4,6 +4,7 @@ import './App.css';
 function App() {
 
   const fetching = useRef(false);
+  const ssr = useRef('');
   const [content, setContent] = useState(null);
 
   useEffect(() => {
@@ -36,6 +37,11 @@ function App() {
 
       console.log('Content item:', item);
 
+      if (item.content.ssc) {
+        const ssc_res = await fetch(item.content.ssc);
+        ssr.current = await ssc_res.text();
+      }
+
       setContent(item.content);
     }
 
@@ -44,8 +50,8 @@ function App() {
 
   return (
     <div className="App">
-      <div id={`ls-${content?.id}`} data-id={content?.id} data-store="STORE_ID" data-lang="it_IT"> {/* dynamic passing of data-lang attribute, e.g. "it", "en", "en_US", "it_IT" */}
-        {/* content.ssc ? content.ssc : '' */}
+      <div id={`ls-${content?.id}`} data-id={content?.id} data-store="STORE_ID" data-lang="it_IT" // dynamic passing of data-lang attribute, e.g. "it", "en", "en_US", "it_IT"
+        dangerouslySetInnerHTML={{ __html: ssr.current ? ssr.current : '' }}> 
       </div>  
     </div>
   );
