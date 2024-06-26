@@ -16,6 +16,6 @@ You may also see any lint errors in the console.
 
 ## Learn More
 
-You can learn more in the [Live Story Amplience documentation](https://livestory.nyc/documentation/articles/basic-client-side-integration/).
+You can learn more in the [Live Story documentation](https://livestory.nyc/documentation/articles/basic-client-side-integration/).
 
 To learn Amplience, check out the [Amplience documentation](https://amplience.com/developers/docs/).
