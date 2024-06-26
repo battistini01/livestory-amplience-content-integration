@@ -9,16 +9,19 @@ function App() {
   useEffect(() => {
     if (!content) return;
 
-    const script = document.createElement('script');
-    script.async = true;
-    script.innerHTML = `(function(w){w.fpls_load=w.fpls_load||[];w.fpls_load.push(function(){
-      w.ls_${content.id}=w.ls_${content.id}||new LiveStory("ls-${content.id}", {type:"${content.type}"})})})(window);`;
+    new window.LiveStory(`ls-${content.id}`, { type: content.type });
+
+    // or in a second way
+    //const script = document.createElement('script');
+    //script.async = true;
+    //script.innerHTML = `(function(w){w.fpls_load=w.fpls_load||[];w.fpls_load.push(function(){
+    //  w.ls_${content.id}=w.ls_${content.id}||new LiveStory("ls-${content.id}", {type:"${content.type}"})})})(window);`;
   
-    document.body.appendChild(script);
+    //document.body.appendChild(script);
   
-    return () => {
-      document.body.removeChild(script);
-    }
+    //return () => {
+    //  document.body.removeChild(script);
+    //}
   }, [content]);
 
   useEffect(() => {
