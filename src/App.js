@@ -30,7 +30,7 @@ function App() {
     console.log('Fething content item');
 
     async function fetchContent() {
-      const res = await fetch('https://armanidevelopment.cdn.content.amplience.net/content/id/82993b90-856a-4ac0-984d-4445670c2c6e?locale=it-IT');
+      const res = await fetch('https://armanidevelopment.cdn.content.amplience.net/content/id/ca9683da-5158-4162-a961-4e88581f82a9?locale=it-IT');
       const item = await res.json();
 
       console.log('Content item:', item);
