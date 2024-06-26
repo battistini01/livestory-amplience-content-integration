@@ -28,7 +28,7 @@ function App() {
     if (content || fetching.current) return;
     fetching.current = true;
 
-    console.log('Fething content item');
+    console.log('Fetching content item');
 
     async function fetchContent() {
       const res = await fetch('https://livestory.cdn.content.amplience.net/content/id/13a060bb-8528-47e0-a462-cf97d49c07a2?locale=it-IT');
