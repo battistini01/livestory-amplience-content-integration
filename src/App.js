@@ -1,23 +1,60 @@
-import logo from './logo.svg';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 
+
 function App() {
+
+  const [loaded, setLoaded] = useState(false);
+  const fetching = useRef(false);
+  const [content, setContent] = useState({});
+
+  useEffect(() => {
+
+    if (!loaded || !content) return;
+
+    const script = document.createElement('script');
+  
+    script.async = true;
+    script.innerHTML = `(function(w){w.fpls_load=w.fpls_load||[];w.fpls_load.push(function(){
+      w.ls_${content.id}=w.ls_${content.id}||new LiveStory("ls-${content.id}", {type:"${content.type}"})})})(window);`;
+    script.addEventListener('load', () => setLoaded(true));
+  
+    document.body.appendChild(script);
+  
+    return () => {
+      document.body.removeChild(script);
+    }
+  }, [loaded, content]);
+
+  useEffect(() => {
+    if (loaded || fetching.current) return;
+    fetching.current = true;
+
+    console.log('Fething content item');
+
+    async function fetchContent() {
+      const res = await fetch('https://armanidevelopment.cdn.content.amplience.net/content/id/82993b90-856a-4ac0-984d-4445670c2c6e?locale=it-IT');
+      const item = await res.json();
+
+      console.log('Content item:', item);
+
+      setContent(item.content);
+      setLoaded(true);
+    }
+
+    fetchContent();
+
+    return () => {
+      //setFetching(false);
+    }
+
+  }, [loaded, fetching]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div id={`ls-${content.id}`} data-id={content.id} data-store="STORE_ID" data-lang="it_IT"> {/* dynamic passing data-lang */}
+        {/* content.ssc ? content.ssc : '' */}
+      </div>  
     </div>
   );
 }
